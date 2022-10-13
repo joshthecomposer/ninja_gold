@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Ninja Gold</title>
+</head>
+<body>
+    <div class="container mt-3">
+        {% if session['tries'] < session['loss'] and session['gold'] < session['goal'] %}
+        <div class="row">
+            <div class="col-1">
+                <p class="lead">Gold:</p>
+            </div>
+            <div class="col-1">
+                {%if 'gold' in session:%}
+                    <p class="lead text-begin">{{session['gold']}}</p>
+                {%else:%}
+                    <p class="lead">0</p>
+                {%endif%}
+            </div>
+            <div class="col-1">
+                <p class="lead">Goal:</p>
+            </div>
+            <div class="col-1">
+                <p class="lead">{{session['goal']}}</p>
+            </div>
+            <div class="col-1">
+                <p class="lead">Tries:</p>
+            </div>
+            <div class="col-1">
+                <p class="lead text-nowrap">{{session['tries']}} of {{session['loss']}}</p>
+            </div>
+            {%elif session['gold'] >= session['goal']%}
+            <div class="col-12 text-center mb-3">
+                <div class="display-1">You Won!</div>
+                <a href="/clear" class="btn btn-sm btn-dark col-3 mt-2">Reset</a>
+            </div>
+            {%else%}
+            <div class="col-12 text-center mb-3">
+                <div class="display-1">You lose!</div>
+                <a href="/clear" class="btn btn-sm btn-dark col-3 mt-2">Reset</a>
+            </div>
+            {%endif%}
+        </div>
+    </div>
+    {%if session['tries'] < session['loss'] and session['gold'] < session['goal'] %}
+    <div class="container jumbotron">
+        <div class="row justify-content-around">
+            <div class="text-center">
+                <div class="container bg-secondary rounded py-3" style="width: 200px; height: 200px">
+                    <h5 class="text-center">Farm</h5>
+                    <p class="text-center">(earns 10-20 gold)</p>
+                    <form action="/process" method="POST">
+                        <input name="input_one" type="hidden" value="10">
+                        <input name="input_two" type="hidden" value="20">
+                        <button name="submit_button" class="btn btn-sm btn-dark text-center" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+            </div>   
+            <div class="text-center">
+                <div class="container bg-secondary rounded py-3" style="width: 200px; height: 200px">
+                    <h5 class="text-center">Cave</h5>
+                    <p class="text-center">(earns 5-10 gold)</p>
+                    <form action="/process" method="POST">
+                        <input name="input_one" type="hidden" value="5">
+                        <input name="input_two" type="hidden" value="10">
+                        <button name="submit_button" class="btn btn-sm btn-dark text-center" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="container bg-secondary rounded py-3" style="width: 200px; height: 200px">
+                    <h5 class="text-center">House</h5>
+                    <p class="text-center">(earns 2-5 gold)</p>
+                    <form action="/process" method="POST">
+                        <input name="input_one" type="hidden" value="2">
+                        <input name="input_two" type="hidden" value="5">
+                        <button name="submit_button" class="btn btn-sm btn-dark text-center" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="container bg-secondary rounded py-3" style="width: 200px; height: 200px">
+                    <h5 class="text-center">Casino</h5>
+                    <p class="text-center">(earns/takes 0-50 gold)</p>
+                    <form action="/process" method="POST">
+                        <input name="input_one" type="hidden" value="-50">
+                        <input name="input_two" type="hidden" value="50">
+                        <button name="submit_button" class="btn btn-sm btn-dark text-center" type="submit">Find Gold!</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+    <div class="container">
+        <div class="col-2">
+            <p class="lead">Activity Log:</p>
+        </div>
+    </div>
+        <div class="container rounded bg-light mb-5" style="height: 250px; overflow-y:scroll;">
+            {%for i in session['log']%}
+                {{ i | safe }}
+            {%endfor%}
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
